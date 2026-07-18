@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The Last Slice is a tiny slapstick game about a very determined piece of pizza."
+    />
+    <meta name="theme-color" content="#d94b34" />
+    <meta property="og:title" content="The Last Slice" />
+    <meta
+      property="og:description"
+      content="Can you catch the most evasive slice of pizza in town?"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sudarshanchaudhari.github.io/TheLastSlice/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The Last Slice" />
+    <meta
+      name="twitter:description"
+      content="Can you catch the most evasive slice of pizza in town?"
+    />
+    <link rel="canonical" href="https://sudarshanchaudhari.github.io/TheLastSlice/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8D%95%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>The Last Slice</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#game-stage">Skip to the pizza</a>
+
+    <header class="topbar">
+      <div class="brand" aria-label="The Last Slice">
+        <span class="brand-mark" aria-hidden="true">🍕</span>
+        <div>
+          <p class="eyebrow">Tony's, 12:03 a.m.</p>
+          <h1>The Last Slice</h1>
+        </div>
+      </div>
+
+      <div class="controls" aria-label="Game controls">
+        <button
+          class="control-button"
+          id="sound-toggle"
+          type="button"
+          aria-pressed="true"
+          aria-label="Mute game sounds"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path class="sound-speaker" d="M4 9v6h4l5 4V5L8 9H4Z" />
+            <path class="sound-waves" d="M16 8.5c1.3 1.3 1.3 5.7 0 7m2.5-9c2.8 2.8 2.8 8.2 0 11" />
+          </svg>
+          <span id="sound-label">Sound on</span>
+        </button>
+        <button class="control-button" id="reset-button" type="button">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M5 7v5h5M6.2 17.3a8 8 0 1 0-.8-9.2L5 12" />
+          </svg>
+          Reset
+        </button>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="score-strip" aria-label="Game progress">
+        <div class="attempt-readout">
+          <span class="attempt-number" id="attempt-count">0</span>
+          <span class="attempt-copy">attempts<br />made</span>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-labels" aria-hidden="true">
+            <span>First reach</span>
+            <span>Escape</span>
+            <span>Earned</span>
+          </div>
+          <div
+            class="progress-track"
+            id="progress-track"
+            role="progressbar"
+            aria-label="Attempts until the slice is earned"
+            aria-valuemin="0"
+            aria-valuemax="15"
+            aria-valuenow="0"
+          >
+            <span class="progress-fill" id="progress-fill"></span>
+            <span class="progress-notch progress-notch--escape" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <p class="round-stamp" id="round-stamp">Round 1</p>
+      </section>
+
+      <p class="game-status" id="game-status" aria-live="polite" aria-atomic="true">
+        Go on. Take it. What could happen?
+      </p>
+
+      <section
+        class="game-stage"
+        id="game-stage"
+        aria-label="An open pizza box with one last slice on a restaurant table"
+      >
+        <div class="table-grain" aria-hidden="true"></div>
+
+        <div class="decoration decoration--napkin" aria-hidden="true">
+          <span>TONY'S</span>
+          <small>Hot • Fresh • Questionable</small>
+        </div>
+
+        <svg class="decoration decoration--chili" aria-hidden="true" viewBox="0 0 150 80">
+          <path class="chili-stem" d="M116 23c13-19 25-12 30-7" />
+          <path class="chili-body" d="M124 23C91 14 39 24 8 58c50 13 99 4 116-35Z" />
+          <path class="chili-shine" d="M101 29c-23-4-46 3-61 12" />
+        </svg>
+
+        <div class="decoration decoration--olive-dish" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <svg class="decoration decoration--basil" aria-hidden="true" viewBox="0 0 100 110">
+          <path d="M49 102C48 72 51 45 65 14" />
+          <path d="M59 47C81 42 91 29 87 9 64 12 54 25 59 47Z" />
+          <path d="M48 69C26 67 14 55 15 35c22 0 35 12 33 34Z" />
+          <path d="M48 86C68 86 78 75 78 59 59 58 48 68 48 86Z" />
+        </svg>
+
+        <div class="box" id="pizza-box" aria-hidden="true">
+          <div class="box-lid">
+            <div class="lid-print">
+              <span class="lid-kicker">Tony's famous</span>
+              <strong>PIE</strong>
+              <span class="lid-rule"></span>
+              <small>Made with love &amp; poor decisions</small>
+            </div>
+            <span class="lid-stain lid-stain--one"></span>
+            <span class="lid-stain lid-stain--two"></span>
+          </div>
+          <div class="box-base">
+            <span class="grease-mark grease-mark--one"></span>
+            <span class="grease-mark grease-mark--two"></span>
+            <span class="crumb crumb--one"></span>
+            <span class="crumb crumb--two"></span>
+            <span class="crumb crumb--three"></span>
+            <div class="box-tab"></div>
+          </div>
+        </div>
+
+        <svg
+          class="cheese-stretch"
+          id="cheese-stretch"
+          aria-hidden="true"
+          viewBox="0 0 1000 620"
+          preserveAspectRatio="none"
+        >
+          <path d="M500 354C444 315 421 285 384 251S319 220 297 193" />
+          <path d="M520 365C473 333 460 304 430 280" />
+        </svg>
+
+        <div class="slice-home" id="slice-home">
+          <button
+            class="slice-actor"
+            id="pizza-slice"
+            type="button"
+            aria-describedby="slice-instructions"
+            aria-label="Take the last slice of pizza"
+          >
+            <svg class="slice-art" aria-hidden="true" viewBox="0 0 240 280">
+              <defs>
+                <filter id="slice-shadow" x="-30%" y="-25%" width="160%" height="170%">
+                  <feDropShadow dx="0" dy="11" stdDeviation="8" flood-color="#331d17" flood-opacity=".34" />
+                </filter>
+              </defs>
+              <g filter="url(#slice-shadow)">
+                <path class="crust-edge" d="M25 35C44 7 196 6 216 36c10 15 2 38-15 42L126 255c-6 14-25 14-31 0L38 77C19 72 15 50 25 35Z" />
+                <path class="cheese" d="M40 66C67 78 176 80 201 65l-78 184c-5 11-19 11-24 0L40 66Z" />
+                <path class="cheese-shade" d="M122 238 56 76c18 5 42 8 64 8 2 54 4 105 2 154Z" />
+                <path class="crust" d="M28 33C54 9 188 10 212 34c15 15 3 39-17 42-48 8-110 8-157 0-21-4-25-28-10-43Z" />
+                <path class="crust-shine" d="M48 31c37-11 104-11 142 1" />
+                <g class="pepperoni">
+                  <circle cx="86" cy="111" r="20" />
+                  <circle cx="154" cy="104" r="19" />
+                  <circle cx="119" cy="176" r="21" />
+                  <path d="m77 103 7 5m6 8 5 3m50-21 7 5m-39 66 8 5m9 9 6 3" />
+                </g>
+                <g class="mushrooms">
+                  <path d="M56 151c3-14 23-17 32-7-1 8-10 12-17 10l1 14-10 1-1-15c-6 1-10-1-5-3Z" />
+                  <path d="M156 157c3-13 20-15 29-7-1 7-9 11-15 9l1 13-9 1-1-14c-5 1-9-1-5-2Z" />
+                </g>
+                <g class="olive-rings">
+                  <circle cx="118" cy="111" r="8" />
+                  <circle cx="92" cy="199" r="7" />
+                </g>
+              </g>
+              <g class="slice-face">
+                <circle cx="104" cy="213" r="3.5" />
+                <circle cx="128" cy="211" r="3.5" />
+                <path d="M111 224q8 7 15-1" />
+              </g>
+              <g class="leaf-disguise">
+                <path d="M78 143c14-19 37-17 47 1-15 14-33 14-47-1Z" />
+                <path d="M125 144c14-19 37-17 47 1-15 14-33 14-47-1Z" />
+                <path d="m121 144 1-25" />
+                <text x="120" y="190" text-anchor="middle">SALAD</text>
+              </g>
+              <g class="slice-legs">
+                <path d="M98 248q-8 13-3 25m29-25q9 13 4 25" />
+                <path d="m95 273-13 2m46-2 13 2" />
+              </g>
+            </svg>
+            <span class="slice-focus-label" aria-hidden="true">TAKE ME</span>
+          </button>
+        </div>
+
+        <svg class="cartoon-hand hand--left" aria-hidden="true" viewBox="0 0 210 120">
+          <path class="hand-sleeve hand-sleeve--blue" d="M0 58h91v53H0Z" />
+          <path class="hand-skin" d="M77 54c15 0 26 8 36 3l46-26c9-5 17 8 10 14l-25 19 42-12c11-3 15 12 5 17l-35 14 31-2c11-1 12 15 1 18l-53 12c-27 6-42 0-58-15V54Z" />
+          <path class="hand-line" d="m113 67 32-10m-25 24 38-11m-32 25 32-9" />
+        </svg>
+
+        <svg class="cartoon-hand hand--right" aria-hidden="true" viewBox="0 0 210 120">
+          <path class="hand-sleeve hand-sleeve--green" d="M119 55h91v56h-91Z" />
+          <path class="hand-skin hand-skin--dark" d="M133 52c-16 0-25 8-36 3L52 29c-10-5-18 8-10 15l25 18-43-11c-11-3-15 12-5 17l36 13-32-1c-11 0-12 15-1 18l53 12c28 6 43 0 58-15V52Z" />
+          <path class="hand-line hand-line--dark" d="M97 65 65 55m25 24-38-11m32 25-32-9" />
+        </svg>
+
+        <svg class="cartoon-hand hand--top" aria-hidden="true" viewBox="0 0 210 120">
+          <path class="hand-sleeve hand-sleeve--red" d="M0 58h91v53H0Z" />
+          <path class="hand-skin hand-skin--light" d="M77 54c15 0 26 8 36 3l46-26c9-5 17 8 10 14l-25 19 42-12c11-3 15 12 5 17l-35 14 31-2c11-1 12 15 1 18l-53 12c-27 6-42 0-58-15V54Z" />
+          <path class="hand-line" d="m113 67 32-10m-25 24 38-11m-32 25 32-9" />
+        </svg>
+
+        <div class="tiny-carrier" aria-hidden="true">
+          <span class="carrier-hat"></span>
+          <span class="carrier-head"></span>
+          <span class="carrier-body"></span>
+          <span class="carrier-leg carrier-leg--left"></span>
+          <span class="carrier-leg carrier-leg--right"></span>
+        </div>
+
+        <div class="fake-slices" id="fake-slices" aria-hidden="true"></div>
+
+        <div class="escape-sign" aria-hidden="true">
+          <span>🏃</span>
+          <strong>Fugitive slice!</strong>
+        </div>
+      </section>
+
+      <p class="instructions" id="slice-instructions">
+        Click, tap, or drag the slice. Keyboard: focus it, then press Enter or Space.
+      </p>
+    </main>
+
+    <section
+      class="celebration"
+      id="celebration"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="celebration-title"
+      aria-describedby="celebration-copy"
+      hidden
+    >
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+      <div class="celebration-card">
+        <span class="celebration-burst" aria-hidden="true">✦</span>
+        <p class="celebration-kicker">Fifteen reaches. Zero regrets.</p>
+        <h2 id="celebration-title">“You earned the last slice.”</h2>
+        <p id="celebration-copy">The hands concede. The box approves. Dinner is yours.</p>
+        <div class="prize-slice" aria-hidden="true">🍕</div>
+        <button class="play-again" id="celebration-reset" type="button">Play again</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>Made from dough, determination, and vanilla JavaScript.</p>
+      <span>No data collected. No slices harmed.</span>
+    </footer>
+
+    <template id="fake-slice-template">
+      <span class="fake-slice">
+        <span class="fake-crust"></span>
+        <span class="fake-pepperoni fake-pepperoni--one"></span>
+        <span class="fake-pepperoni fake-pepperoni--two"></span>
+      </span>
+    </template>
+  </body>
+</html>

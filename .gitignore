@@ -1,0 +1,44 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies and tool caches
+node_modules/
+.cache/
+.parcel-cache/
+.eslintcache
+coverage/
+
+# Logs, environment files, and local overrides
+*.log
+.env
+.env.*
+!.env.example
+*.local
+
+# Generated output
+dist/
+build/
+out/
+
+# Hosting provider state
+.vercel/
+.netlify/
+
+# Keys and signing material
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+keystore.properties
+local.properties
+secure.properties

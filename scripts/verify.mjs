@@ -38,6 +38,16 @@ const html = files.get("index.html") ?? "";
 const css = files.get("style.css") ?? "";
 const javascript = files.get("script.js") ?? "";
 
+function effectiveRootTokens(source) {
+  const tokens = {};
+  for (const match of source.matchAll(/:root\s*\{([\s\S]*?)\}/g)) {
+    for (const declaration of match[1].matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
+      tokens[declaration[1]] = declaration[2].trim();
+    }
+  }
+  return tokens;
+}
+
 const syntaxCheck = spawnSync(process.execPath, ["--check", join(root, "script.js")], {
   encoding: "utf8",
 });
@@ -156,10 +166,18 @@ if (!css.includes("@media (prefers-reduced-motion: reduce)")) {
   pass("reduced-motion support is present");
 }
 
-const sharedColors = ["#15152a", "#fff5df", "#ff5d5d", "#4f7cff", "#ffd166", "#58d6a9", "#b695ff"];
-for (const color of sharedColors) {
-  if (!new RegExp(color, "i").test(css)) {
-    fail(`missing shared TinyChaos color: ${color}`);
+const tokens = effectiveRootTokens(css);
+for (const [name, expected] of Object.entries({
+  "--ink": "#15152a",
+  "--paper": "#fff5df",
+  "--coral": "#ff5d5d",
+  "--blue": "#4f7cff",
+  "--butter": "#ffd166",
+  "--mint": "#58d6a9",
+  "--lilac": "#b695ff",
+})) {
+  if (tokens[name]?.toLowerCase() !== expected) {
+    fail(`${name} must resolve to ${expected}`);
   }
 }
 if (!/--display:\s*Impact/.test(css)) {
@@ -173,6 +191,9 @@ if (!/body\s*\{[\s\S]*min-width:\s*0;[\s\S]*overflow-x:\s*clip;[\s\S]*overflow-y
 }
 if (!/button:focus-visible,[\s\S]*outline:\s*4px solid var\(--blue\)/.test(css)) {
   fail("focus treatment must use TinyChaos blue");
+}
+if (!/\.control-button,[\s\S]*\.play-again\s*\{[\s\S]*border:\s*3px solid var\(--ink\)[\s\S]*box-shadow:\s*4px 4px 0 var\(--ink\)/.test(css)) {
+  fail("utility controls need heavy ink outlines and solid offsets");
 }
 if (!html.includes('href="https://sudarshanchaudhari.github.io/TinyChaos/"')) {
   fail("TinyChaos gallery link is required");

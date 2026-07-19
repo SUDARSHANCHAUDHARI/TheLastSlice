@@ -154,24 +154,23 @@
     gap: 0.42rem;
     min-height: 2.65rem;
     padding: 0.58rem 0.8rem;
-    border: 2px solid rgb(255 255 255 / 32%);
+    border: 3px solid var(--ink);
     border-radius: 0.7rem;
-    color: var(--paper);
-    background: rgb(42 20 16 / 26%);
+    color: var(--ink);
+    background: var(--paper);
     font-size: 0.78rem;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 3px 0 rgb(38 15 11 / 28%);
+    box-shadow: 4px 4px 0 var(--ink);
   }
 
   .control-button:hover {
-    border-color: rgb(255 255 255 / 70%);
-    background: rgb(42 20 16 / 42%);
+    background: var(--butter);
     transform: translateY(-1px);
   }
 
   .control-button:active {
-    box-shadow: none;
+    box-shadow: 1px 1px 0 var(--ink);
     transform: translateY(2px);
   }
 

@@ -64,7 +64,11 @@ for (const [needle, label] of requiredHtml) {
 
 const absoluteRuntimeAssets = [...html.matchAll(/(?:src|href)="(https?:\/\/[^\"]+)"/gi)]
   .map((match) => match[1])
-  .filter((url) => !url.startsWith("https://sudarshanchaudhari.github.io/TheLastSlice/"));
+  .filter(
+    (url) =>
+      !url.startsWith("https://sudarshanchaudhari.github.io/TheLastSlice/") &&
+      !url.startsWith("https://sudarshanchaudhari.github.io/TinyChaos/"),
+  );
 if (absoluteRuntimeAssets.length > 0) {
   fail(`unexpected external runtime assets: ${absoluteRuntimeAssets.join(", ")}`);
 } else {
@@ -150,6 +154,31 @@ if (!css.includes("@media (prefers-reduced-motion: reduce)")) {
   fail("reduced-motion stylesheet support is missing");
 } else {
   pass("reduced-motion support is present");
+}
+
+const sharedColors = ["#15152a", "#fff5df", "#ff5d5d", "#4f7cff", "#ffd166", "#58d6a9", "#b695ff"];
+for (const color of sharedColors) {
+  if (!new RegExp(color, "i").test(css)) {
+    fail(`missing shared TinyChaos color: ${color}`);
+  }
+}
+if (!/--display:\s*Impact/.test(css)) {
+  fail("display typography must use the condensed family stack");
+}
+if (!/--body:\s*"Arial Rounded MT Bold"/.test(css)) {
+  fail("body typography must use the rounded family stack");
+}
+if (!/body\s*\{[\s\S]*min-width:\s*0;[\s\S]*overflow-x:\s*clip;[\s\S]*overflow-y:\s*auto;/.test(css)) {
+  fail("body must preserve vertical scrolling and avoid a positive minimum width");
+}
+if (!/button:focus-visible,[\s\S]*outline:\s*4px solid var\(--blue\)/.test(css)) {
+  fail("focus treatment must use TinyChaos blue");
+}
+if (!html.includes('href="https://sudarshanchaudhari.github.io/TinyChaos/"')) {
+  fail("TinyChaos gallery link is required");
+}
+if (!html.includes("TheLastSlice · by Sudarshan Chaudhari")) {
+  fail("author attribution is required");
 }
 
 const keyframes = [...css.matchAll(/@keyframes\s+([\w-]+)/g)].map((match) => match[1]);

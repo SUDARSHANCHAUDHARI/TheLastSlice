@@ -211,7 +211,9 @@ To roll back a release, redeploy a previously verified commit from `main`; the p
 
 ## License
 
-Copyright © 2026 SudarshanTechLabs. All rights reserved.
+Copyright © 2026 SudarshanTechLabs.
+
+Released under the MIT License — see [LICENSE](LICENSE) for the full text.
 
 ---
 

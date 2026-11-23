@@ -2,7 +2,7 @@
 
 **The Last Slice** is a playful, standalone browser game about the most evasive slice of pizza in town. Click, tap, or drag the final slice while cartoon hands, stretchy cheese, a suspicious pizza box, and the slice itself conspire to keep dinner out of reach.
 
-> **Project status:** The production source is complete and verified. The repository remains private, and GitHub Pages has not been enabled yet.
+> **Project status:** Released. The production source is complete and verified, the repository is public, and GitHub Pages is live at <https://sudarshanchaudhari.github.io/TheLastSlice/>.
 
 ## Table of Contents
 
@@ -129,9 +129,9 @@ TheLastSlice/
 - Node.js 18 or later is recommended for the production verification command.
 - Python 3 is optional if you want to run the documented static server.
 
-### Clone the private repository
+### Clone the repository
 
-Authenticate with GitHub, then run:
+The repository is public, so no authentication is required:
 
 ```sh
 git clone https://github.com/SUDARSHANCHAUDHARI/TheLastSlice.git
@@ -183,26 +183,23 @@ The Last Slice:
 
 ## GitHub Pages release
 
-The source uses relative asset paths and is ready to run below the repository Pages path. The intended public URL is:
+The source uses relative asset paths and runs below the repository Pages path. The site is live at:
 
 `https://sudarshanchaudhari.github.io/TheLastSlice/`
 
-The repository must remain private until public release is explicitly approved. At release time:
+The repository is public and Pages deploys from `main` at `/ (root)`, so a push to `main` republishes the site. For each subsequent release:
 
 1. Confirm the working tree is clean.
 2. Run `node scripts/verify.mjs` from a clean checkout.
 3. Complete the manual browser interaction checklist.
-4. Change the GitHub repository visibility to public.
-5. Open **Settings → Pages**.
-6. Choose **Deploy from a branch**.
-7. Select `main` and `/ (root)`, then save.
-8. Verify the published URL and canonical metadata.
+4. Push to `main` and wait for the Pages deployment to finish.
+5. Verify the published URL and canonical metadata.
 
 To roll back a release, redeploy a previously verified commit from `main`; the project has no database, migration, backend, or user data requiring restoration.
 
 ## Repository policy
 
-- Keep the repository private until Sudarshan explicitly approves public release.
+- The repository is public; changing its visibility is Sudarshan's decision alone.
 - Preserve the attempt-10 escape and attempt-15 award behavior.
 - Keep production asset references relative.
 - Stage files by explicit path.
